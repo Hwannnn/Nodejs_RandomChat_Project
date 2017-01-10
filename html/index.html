@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>대화가필요해</title>
+	<link rel="stylesheet" type="text/css" href="css/jquery.emojipicker.css">
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="js/jquery.emojipicker.js"></script>
+
+    <!-- Emoji Data -->
+    <link rel="stylesheet" type="text/css" href="css/jquery.emojipicker.tw.css">
+    <script type="text/javascript" src="js/jquery.emojis.js"></script>
+    
+	<script src="/socket.io/socket.io.js"></script>    
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="js/alertify.min.js"></script>
+<link rel="stylesheet" href="css/alertify.core.css"/>
+<link rel="stylesheet" href="css/alertify.default.css"/>
+ 
+  <style type="text/css">
+  @import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+            /* Smartphones (portrait and landscape) */
+            @media only screen
+            and (min-device-width : 320px){
+                 
+                 body {
+                       background-color:rgba(255,255,25,1);
+                 }
+                #container { width:300px;
+                     margin:0px auto;
+                     height:500px;
+                   /*  background-color: orangered;  */
+                     text-align: center;
+                     font-family: 'Jeju Gothic', sans-serif;
+                     background-color:rgba(255,255,25,1);
+                }   
+       #logo {  width:130px;
+                height:95px;
+                margin: 0px auto;
+                padding-top: 15px;
+                margin-bottom: 20px;
+                }
+        img {width:100%;
+           height:100%;
+           border-radius: 10px;
+           }
+     #interest {  background-color: #FFFFcc;
+                  width:80%;
+                  height:60%;
+                  margin: 0px auto;
+              
+        }
+      h2 {background-color: #FFFF99;
+      font-size: 17px;
+      margin:0;
+      width:100%;
+      height:20%;
+      line-height:30px;
+      text-indent:40px;
+     
+      }
+    #interestform {
+                    width:100%;
+                    height:80%;
+    }
+    #interesttable {
+        width:100%;
+        height:100%;
+    }
+     #interesttable td {width:50%;
+                        height:20%;
+                        line-height: 25px;
+                        }
+     #interest input {    width: 15px;
+                height: 15px;
+               vertical-align: middle;
+               margin-right: 15px; 
+               margin-top: 3px;
+               float: right;
+            }
+     label {    color: black;
+                line-height: 25px;  
+                font-size: 15px;
+                display: block;
+                width: 60px;
+                height: 25px;
+                margin-left: 10px;
+                }   
+     #startbutton { width: 40%;
+               margin: 0px auto;
+               height: 65px;
+           /*     background-color: black;  */
+                margin-top: 20px;
+                }
+     #btnRequestRandomChat {   width:100%;
+              height:45%;
+              font: 15px bold;
+               }      
+     #wait {
+        position: absolute;
+        left: 30%;
+        top: 25%;
+        min-width: 160px;
+        background-color: #ccff99;
+        border-radius: 10px;
+        width: 40%;
+        height: 100px;
+        font-size: 18px;
+        visibility: hidden;  
+        text-align: center;
+     }                
+     #waitp { margin-top: 8px;
+              margin-bottom: 0px;
+              text-align: center;
+              font-family: 'Jeju Gothic', sans-serif;
+     }
+     #btnCancelRequest {
+              margin-top:8px;
+              width:40px;
+              height:20px;    }
+            }
+            
+     /*min-device-width : 320px 끝 */
+
+
+
+
+
+            /* Desktops and laptops */
+            @media only screen
+            and (min-width : 1014px) {
+                
+                body {
+                    width:100%;
+                    height:100%;
+                     margin: 0;
+                     padding: 0;
+                /*     background-color: red;  */
+                }
+                #container { width:70%;
+                            height:100%;
+               /*      margin-top:7%;  */
+                /*     background-color: orangered;   */
+                 /*    text-align: center;   */
+                     font-family: 'Jeju Gothic', sans-serif;
+                     background-color:rgba(255,255,25,1);
+                     min-width: 1030px;
+                }
+       #logo {  width:200px;
+                height:150px;
+                margin: 0px auto;
+                margin-bottom: 30px;
+           }
+        img {  width:100%;
+               height:100%;
+               border-radius: 10px;
+           }
+        /* interest div 시작 */
+    #interest {  background-color: #FFFFcc;
+                  width:50%;
+                  height:450px;
+                  margin:0px auto;
+            }
+    h2 {    background-color: #FFFF99;
+            width:100%;
+            height:30px;
+            line-height: 30px;
+            font-size: 20px;
+            margin:0;
+        }
+    #interestform {   width:100%;
+                      height:420px;
+            }
+    #interesttable {   width:100%;
+                       height:100%;
+             }
+     #interesttable td {  width:50%;
+                          height:20%;
+                          line-height: 65px;
+                        }
+    #interest input {    width:20px;
+               height:20px;
+               margin-right: 40px;
+               margin-top: 5px;
+               float: right;
+               }
+       label {
+            /*    padding-top: 4px;   */
+            /*    color: black;  */
+               line-height: 35px;  
+               font-size: 20px;
+               display: block;
+                width: 100px;
+                height:35px;
+                margin-left: 40px;
+                }   
+       #startbutton { width: 40%;
+               margin: 0px auto;
+               height: 135px;
+             /*   background-color: black;   */
+                }
+       #btnRequestRandomChat { width:200px;
+              height:40px;
+              margin-top:40px;
+              font: 20px bold;
+               }    
+       #wait {
+        position: absolute;
+        left: 40%;
+        top: 30%;
+        background-color: #ccff99;
+        border-radius: 20px;
+        width: 270px;
+        height: 150px;
+        font-size: 24px;
+        visibility: hidden;  
+        text-align: center;
+     }             
+     #waitp { margin-top: 40px;
+               text-align: center;
+              font-family: 'Jeju Gothic', sans-serif;
+     }   
+     #waitdot {
+                margin: 0px;
+     }
+     #btnCancelRequest {
+              margin-top:20px;
+              width:60px;
+              height:20px;    }
+            }
+      @keyframes rotate-loading {
+            0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+            100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+        }
+
+        @-moz-keyframes rotate-loading {
+            0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+            100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+        }
+
+        @-webkit-keyframes rotate-loading {
+            0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+            100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+        }
+
+        @-o-keyframes rotate-loading {
+            0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+            100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+        }
+
+        @keyframes rotate-loading {
+            0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+            100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+        }
+
+        @-moz-keyframes rotate-loading {
+            0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+            100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+        }
+
+        @-webkit-keyframes rotate-loading {
+            0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+            100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+        }
+
+        @-o-keyframes rotate-loading {
+            0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+            100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+        }      
+            
+     .loading {
+            border: 2px solid transparent;
+            border-color: transparent #fff transparent #FFF;
+            -moz-animation: rotate-loading 1.5s linear 0s infinite normal;
+            -moz-transform-origin: 50% 50%;
+            -o-animation: rotate-loading 1.5s linear 0s infinite normal;
+            -o-transform-origin: 50% 50%;
+            -webkit-animation: rotate-loading 1.5s linear 0s infinite normal;
+            -webkit-transform-origin: 50% 50%;
+            animation: rotate-loading 1.5s linear 0s infinite normal;
+            transform-origin: 50% 50%;
+        }
+      .loading-container,
+      .loading {
+            height: 25px;
+            position: relative;
+            width: 25px;
+            border-radius: 100%;
+            margin-top: 5px;
+      
+        }
+        .loading-container { margin:0px auto;}
+     /* interest div 끝 */          
+            
+            
+ /* index.html 끝  */        
+      
+ /* chat.html 시작 */
+           
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+
+            /* Smartphones (portrait and landscape) */
+            @media only screen
+            and (min-device-width : 320px){
+     
+     #ch-container { width:100%;
+                     height: 100%;
+                     margin: 0px auto;
+         
+     }
+     #outdiv {   width:10%;
+                height:100%;
+                float:left;
+              }
+    #outbutton {float: right;
+                padding:3px;
+                border:1px solid #FFD732; /* 테두리 정의 */
+                /* border: 1px dashed #ff008; /* 테두리 점선 */
+                background-Color: #FFB900; /* 백그라운드 정의 */
+                font:12px 굴림; /* 폰트 정의 */
+                font-weight:bold; /* 폰트 굵기 */
+                color:white; /* 폰트 색깔 */
+                width:100%;
+                height: 100%;
+                }
+    #outbutton:hover {
+                    background-color:white;
+                    color: #FFB900;
+     }
+    #ch-header {width:320px;
+               height:50px;
+               line-height: 25px;
+                margin:0px auto;
+                background-color: #ccFF99;
+                text-align: center;}
+     #ch-header p {font-size: 11px;
+                width:90%;
+                float:left;
+                }
+    p #int1,#int2,#int3 {font-size: 14px;}
+   #ch-main {width:320px;
+            height:340px;
+            margin:0px auto;
+            background-color: #FFFFcc;}
+   #footer {width:320px;
+            height:78px;
+         /*   background-color: lime; */
+            margin:0px auto;
+            }
+   #ft-header {width:320px;
+                height:15px;
+                line-height: 15px;
+                }
+  *{
+		padding : 0; margin : 0;
+		-webkit-box-sizing : border-box;
+		-moz-box-sizing : border-box;
+		box-sizing : border-box;
+	}
+	body {
+		font-family: 'Jeju Gothic', sans-serif;
+	}
+	ul{
+		list-style-type : none;
+		padding : 15px; background : #FFFF99; color : #000;
+	}
+	#controls {
+		height : 63px;
+		border-top : 2px #D2691E solid;
+		display : block; width : 100%
+	}
+	#controls #inputMessage {
+		width : 82%; height : 100%; 
+		font-size : 15px;
+        float: left;
+	}
+    #imotidiv { width:8%;
+                height:100%;
+                display: inline-block;
+                border: 1px solid grey;
+                background-color: white;
+                }
+    #trigger {  width:100%;
+                height:100%;
+                padding:10px 1px;}
+     #sendbutton {width:10%; height:100%;
+                 float: right;
+                 
+                 }
+	#controls #btnChat {
+		width : 100%; height : 100%;
+        font-size: 15px;
+	}
+     #ftheaderp { font-size: 12px;
+                    background-color:#FFC19E;}
+            } /*min-device-width : 320px 끝 */
+
+
+            /* Desktops and laptops */
+            @media only screen
+            and (min-width : 1014px) {
+                
+     #outbutton {float: right;
+                 padding:7px;
+                 border:1px solid #FFD732; /* 테두리 정의 */
+                 /* border: 1px dashed #ff008; /* 테두리 점선 */
+                 background-Color: #FFB900; /* 백그라운드 정의 */
+                 font:12px 굴림; /* 폰트 정의 */
+                 font-weight:bold; /* 폰트 굵기 */
+                 color:white; /* 폰트 색깔 */     
+                 width:100%;
+                 height:100%;
+                 }
+     #outbutton:hover {
+                    background-color:white;
+                    color: #FFB900;
+     }
+    #outdiv {   width:10%;
+                height:100%;
+                float:left;
+    }
+    #ch-header {width:940px;
+               height:30px;
+               line-height: 30px;
+                margin:0px auto;
+                background-color: #ccFF99;
+                text-align: center;
+                }
+    #ch-header p {font-size: 15px;
+                  float:left;}
+    p #int1,#int2,#int3 {font-size: 20px;}
+   #ch-main {width:940px;
+            height:700px;
+            margin:0px auto;
+            background-color: #FFFFcc;}
+   #footer {width:940px;
+            height:100px;
+       /*     background-color: lime;  */
+            margin:0px auto;
+            }
+   #ft-header {width:940px;
+                height:30px;
+                line-height: 30px;
+                }
+  *{
+		padding : 0; margin : 0;
+		-webkit-box-sizing : border-box;
+		-moz-box-sizing : border-box;
+		box-sizing : border-box;
+	}
+	body {height:100%;
+      /*  margin-top:3%; */
+	  font-family: 'Jeju Gothic', sans-serif;
+	}
+	ul{
+		list-style-type : none;
+		padding : 20px; background : #FFFF99; color : #000;
+	}
+	#controls {
+		height : 70px;
+		border-top : 2px #D2691E solid;
+		display : block; width : 100%
+	}
+	#controls #inputMessage {
+		width : 82%; height : 100%; 
+		 padding : 20px;
+		font-size : 18px;
+        float: left;
+	}
+    #imotidiv { width:8%;
+                height:100%;
+                display: inline-block;
+                border: 1px solid grey;
+                }
+    #trigger {  width:100%;
+                height:100%;
+                padding:12px;}
+    #sendbutton {width:10%; height:100%;
+                 float: right;
+                 border: 1px solid grey;
+                 }
+	#controls #btnChat {
+		width : 100%; height : 100%;
+		padding : 10px;
+        font-size: 20px;
+	}
+     #ftheaderp { font-size: 15px;
+                    background-color:#FFC19E;}
+        </style>
+    <script type="text/javascript">
+		var id = "";
+        var socket = io.connect(window.location.hostname, {'sync disconnect on unload' : true});
+		
+        $(document).ready(function(){
+            socket.on('connected', function(){
+                console.log('connected');
+            });
+
+			socket.on('identifyId', function(data){
+				id = data;	
+			});
+            
+            // 매칭완료되었을 때
+            socket.on('completeMatch', function(data){
+                console.log('completeMatch!');
+                //$('.lobby').hide();
+                $('.wait').hide();
+                $('#container').hide();
+				$('.chat').show();
+            });
+            
+            // 대화를 받았을 때
+            socket.on('firstMessage', function(data, id){
+				$('#int1').text(data.message);
+                $('.chatResult').append('<li>' + id + ' :  상대방과 연결되었습니다. 대화를 시작하세요! </li>');
+            });
+
+            socket.on('receiveMessage', function(data, user_id){
+				if (id == user_id) { user_id = 'Me'; }
+				else { user_id = 'User'; }
+                $('.chatResult').append('<li class = "chatmsg">' + user_id + ' : ' + data.message + '</li>');
+				$('.chatmsg').get(-1).scrollIntoView(true);
+            });
+
+            // 상대방이 나갔을 때 나도 같이 로비로 나감.
+            socket.on('disconnect', function(){
+				$('#cell').empty();
+				$(location).attr('href', './index.html');
+				console.log('disconnect');
+                /*console.log('disconnect');
+                $('.lobby').show();
+                $('.chat').hide();
+				*/
+            });
+            
+            // 랜덤요청 시
+            $('#btnRequestRandomChat').click(function(){
+                $('.lobby').hide();
+                $('.wait').show();
+                socket.emit('requestRandomChat', interest_list());
+            });
+            
+            // 요청 취소 시
+            $('#btnCancelRequest').click(function(){
+                $(location).attr('href', './index.html');
+				/*$('.lobby').show();
+                $('.wait').hide();
+                $('.chat').hide();
+                socket.emit('cancelRequest', interest_list());*/
+            });
+            
+            // 엔터입력 시
+            $('#inputMessage').keyup(function(e){
+                if (e.keyCode == 13){
+                    send();
+                }
+            });
+            // 채팅 내용 전송 시
+            $('#btnChat').click(function(){
+                send();
+            });
+		    
+			$('#inputMessage').emojiPicker({
+		  	   width: '300px',
+     	  	   height: '200px',
+  			   button: false  
+		    });
+		 
+		    $('#trigger').click(function(e) {
+			   e.preventDefault();
+			   $('#inputMessage').emojiPicker('toggle');
+		    });
+		});
+
+        function send(){
+            var message = $('#inputMessage').val();
+            if (message.length < 1){
+                alert('내용을 입력하세요.');
+                return;
+            }
+            socket.emit('sendMessage', {message:message});
+            $('#inputMessage').val('');
+        }
+		
+		function interest_list() {    
+			var str = "";
+			$("input:checkbox:checked").each(function (index) {  
+				str += '@' + $(this).val()  
+			});  
+			return str;		
+		}
+        function oparcity() {
+            var element = document.getElementById('container');
+                element.style.opacity = "0.5";
+                element.style.filter  = 'alpha(opacity=50)'; 
+            var element2 = document.getElementById('wait');
+                element2.style.visibility = "visible"; 
+                };
+        function return2() {
+            var element3 = document.getElementById('container');
+                element3.style.opacity = "1";
+            var element4 = document.getElementById('wait');
+                element4.style.visibility = "hidden";   
+        }
+        function check()
+  {
+   var count=0;
+   //선택된것 갯수 체크
+   for (i=0; i<document.interestform.intrest.length; i++ )
+   {
+    if (document.interestform.intrest[i].checked==true)
+     {
+      count++;
+     }
+   } 
+   //체크박스 선택개수가 3보다 크면
+   if (count>3)
+   {
+    //경고문을 띄우고
+    alertify.alert("3개 까지만 선택하세요");
+    //전체 체크박스 해제
+    for (i=0; i<document.interestform.intrest.length; i++ )
+    {
+    document.interestform.intrest[i].checked=false;
+    }
+   }
+  }
+    </script>
+</head>
+<body>
+	<div id="container" >
+		<div id="logo">
+			<a href='#'><img src="/logo.jpg" /></a>
+		</div>
+
+		<div id="interest">
+			<h2>관심사를 선택하세요.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (최대3개 선택가능)</h2>
+			<form action="" method="post" name="interestform" id="interestform">
+				<table id="interesttable">
+				<tr>
+					<td><input type="checkbox" name="intrest" id="aaa" value="만화" onclick="check();"/>
+					<label for="aaa">만화</label></td>
+					<td><input type="checkbox" name="intrest" id="bbb" value="영화" onclick="check();"/>
+					<label for="bbb">영화</label></td></lable>
+				 </tr>
+				<tr>
+					<td><input type="checkbox" name="intrest" id="ccc" value="여행" onclick="check();"/>
+					<label for="ccc">여행</lablel></td>
+					<td><input type="checkbox" name="intrest" id="ddd" value="이성친구" onclick="check();"/>
+					<label for="ddd">이성친구</label></td></lable>
+				 </tr>
+				<tr>
+					<td><input type="checkbox" name="intrest" id="eee" value="자전거" onclick="check();"/>
+					<label for="eee">자전거</label></td>
+					<td><input type="checkbox" name="intrest" id="fff" value="맛집탐방" onclick="check();"/>
+					<label for="fff">맛집탐방</label></td></lable>
+				 </tr>
+				 <tr>
+				   <td><input type="checkbox" name="intrest" id="ggg" value="헬스" onclick="check();"/>
+					<label for="ggg">헬스</label></td>
+					<td><input type="checkbox" name="intrest" id="hhh" value="다이어트" onclick="check();"/>
+					<label for="hhh">다이어트</label></td></lable>
+				 </tr>
+				 <tr>
+					<td><input type="checkbox" name="intrest" id="iii" value="쇼핑" onclick="check();"/>
+					<label for="iii">쇼핑</label></td>
+					<td><input type="checkbox" name="intrest" id="jjj" value="공부" onclick="check();"/>
+					<label for="jjj">공부</label></td></lable>
+				 </tr>
+			     </table>
+		     </form>
+		</div>
+		<div class="lobby container" id="startbutton">
+			<button id="btnRequestRandomChat" class="btn" onclick="oparcity()">채팅입장</button>
+		</div>
+        
+        
+        </div> <!-- container div 끝 -->
+        
+		<div class="wait container" id="wait">
+			<div><p id="waitp">상대방을 기다리는 중</p><div class="loading-container">
+			<div class="loading" ></div></div></div>
+			<button id="btnCancelRequest" class="btn" onclick="return2()">취소</button>
+        </div>
+
+
+<!-- chat.html 시작 -->          
+         
+	<div id="ch-container" class="chat container" style = "display : none;">
+
+		<div id="ch-header">
+			<p>두 사람의 공통관심사는 <span id="int1"></span>입니다. </p>
+		<div id="outdiv"><button type="button" formaction="" id="outbutton" onclick = "window.location.href = 'index.html'">나가기</button></div>
+		</div>  <!-- ch-header div -->
+
+	    <div id="ch-main" style = "overflow : auto">
+			<ul class="chatResult" id = "cell"></ul>
+	    </div>
+
+		<div id="footer">
+			<div id="ft-header">
+				<p id="ftheaderp" style="margin:0px;">메세지 : ex)안녕하세요. 오늘 날씨 좋죠?</p>
+			</div>
+            
+			<div id = "controls">
+			  <textarea id="inputMessage" class="input-medium search-query"></textarea>
+			  <div id="imotidiv"><img src = "emoji.jpg" id="trigger"/></div>
+			  <div id="sendbutton">
+              <button type="submit" id="btnChat" class="btn">전송</button>
+              </div><!-- sendbutton div -->
+		    </div><!-- controls div -->
+		</div> <!-- footer div -->
+	</div> <!-- ch-container div -->
+
+</body>
+</html>
