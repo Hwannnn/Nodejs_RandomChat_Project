@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>대화가필요해</title>
+	<link rel="stylesheet" type="text/css" href="css/jquery.emojipicker.css">
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="js/jquery.emojipicker.js"></script>
+
+    <!-- Emoji Data -->
+    <link rel="stylesheet" type="text/css" href="css/jquery.emojipicker.tw.css">
+    <script type="text/javascript" src="js/jquery.emojis.js"></script>
+    
+	<script src="/socket.io/socket.io.js"></script>    
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="js/alertify.min.js"></script>
+	<link rel="stylesheet" href="css/alertify.core.css"/>
+	<link rel="stylesheet" href="css/alertify.default.css"/>
+	<link rel="stylesheet" href="./css/index.css"/> 
+	<link rel="stylesheet" href="./css/chat.css"/> 
+
+    <script type="text/javascript">
+		var id = "";
+        var socket = io.connect(window.location.hostname, {'sync disconnect on unload' : true});
+		
+        $(document).ready(function(){
+            socket.on('connected', function(){
+                console.log('connected');
+            });
+
+			socket.on('identifyId', function(data){
+				id = data;	
+			});
+            
+            // 매칭완료되었을 때
+            socket.on('completeMatch', function(data){
+                console.log('completeMatch!');
+                //$('.lobby').hide();
+                $('.wait').hide();
+                $('#container').hide();
+				$('.chat').show();
+            });
+            
+            // 대화를 받았을 때
+            socket.on('firstMessage', function(data, id){
+				$('#int1').text(data.message);
+                $('.chatResult').append('<li>' + id + ' :  상대방과 연결되었습니다. 대화를 시작하세요! </li>');
+            });
+
+            socket.on('receiveMessage', function(data, user_id){
+				if (id == user_id) { user_id = 'Me'; }
+				else { user_id = 'User'; }
+                $('.chatResult').append('<li class = "chatmsg">' + user_id + ' : ' + data.message + '</li>');
+				$('.chatmsg').get(-1).scrollIntoView(true);
+            });
+
+            // 상대방이 나갔을 때 나도 같이 로비로 나감.
+            socket.on('disconnect', function(){
+				$('#cell').empty();
+				$(location).attr('href', './index.html');
+				console.log('disconnect');
+                /*console.log('disconnect');
+                $('.lobby').show();
+                $('.chat').hide();
+				*/
+            });
+            
+            // 랜덤요청 시
+            $('#btnRequestRandomChat').click(function(){
+                $('.lobby').hide();
+                $('.wait').show();
+                socket.emit('requestRandomChat', interest_list());
+            });
+            
+            // 요청 취소 시
+            $('#btnCancelRequest').click(function(){
+                $(location).attr('href', './index.html');
+				/*$('.lobby').show();
+                $('.wait').hide();
+                $('.chat').hide();
+                socket.emit('cancelRequest', interest_list());*/
+            });
+            
+            // 엔터입력 시
+            $('#inputMessage').keyup(function(e){
+                if (e.keyCode == 13){
+                    send();
+                }
+            });
+            // 채팅 내용 전송 시
+            $('#btnChat').click(function(){
+                send();
+            });
+		    
+			$('#inputMessage').emojiPicker({
+		  	   width: '300px',
+     	  	   height: '200px',
+  			   button: false  
+		    });
+		 
+		    $('#trigger').click(function(e) {
+			   e.preventDefault();
+			   $('#inputMessage').emojiPicker('toggle');
+		    });
+		});
+
+        function send(){
+            var message = $('#inputMessage').val();
+            if (message.length < 1){
+                alert('내용을 입력하세요.');
+                return;
+            }
+            socket.emit('sendMessage', {message:message});
+            $('#inputMessage').val('');
+        }
+		
+		function interest_list() {    
+			var str = "";
+			$("input:checkbox:checked").each(function (index) {  
+				str += '@' + $(this).val()  
+			});  
+			return str;		
+		}
+        function oparcity() {
+            var element = document.getElementById('container');
+                element.style.opacity = "0.5";
+                element.style.filter  = 'alpha(opacity=50)'; 
+            var element2 = document.getElementById('wait');
+                element2.style.visibility = "visible"; 
+                };
+        function return2() {
+            var element3 = document.getElementById('container');
+                element3.style.opacity = "1";
+            var element4 = document.getElementById('wait');
+                element4.style.visibility = "hidden";   
+        }
+        function check() {
+		    var count=0;
+		   
+		    //선택된것 갯수 체크
+		    for (i=0; i<document.interestform.intrest.length; i++ ){
+				if (document.interestform.intrest[i].checked==true){
+					count++;
+				}
+			} 
+		    //체크박스 선택개수가 3보다 크면
+		    if (count>3){
+		 	    //경고문을 띄우고
+	 		    alertify.alert("3개 까지만 선택하세요");
+ 			    //전체 체크박스 해제
+				for (i=0; i<document.interestform.intrest.length; i++ ){
+					document.interestform.intrest[i].checked=false;
+				}
+		    }
+		}
+    </script>
+</head>
+<body style="margin-top:100px;">
+	<div id="container" >
+		<div id="logo">
+			<a href='#'><img src="/logo.jpg" /></a>
+		</div>
+
+		<div id="interest">
+			<h2>관심사를 선택하세요.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (최대3개 선택가능)</h2>
+			<form action="" method="post" name="interestform" id="interestform">
+				<table id="interesttable">
+				<tr>
+					<td><input type="checkbox" name="intrest" id="aaa" value="만화" onclick="check();"/>
+					<label for="aaa">만화</label></td>
+					<td><input type="checkbox" name="intrest" id="bbb" value="영화" onclick="check();"/>
+					<label for="bbb">영화</label></td></lable>
+				 </tr>
+				<tr>
+					<td><input type="checkbox" name="intrest" id="ccc" value="여행" onclick="check();"/>
+					<label for="ccc">여행</lablel></td>
+					<td><input type="checkbox" name="intrest" id="ddd" value="이성친구" onclick="check();"/>
+					<label for="ddd">이성친구</label></td></lable>
+				 </tr>
+				<tr>
+					<td><input type="checkbox" name="intrest" id="eee" value="자전거" onclick="check();"/>
+					<label for="eee">자전거</label></td>
+					<td><input type="checkbox" name="intrest" id="fff" value="맛집탐방" onclick="check();"/>
+					<label for="fff">맛집탐방</label></td></lable>
+				 </tr>
+				 <tr>
+				   <td><input type="checkbox" name="intrest" id="ggg" value="헬스" onclick="check();"/>
+					<label for="ggg">헬스</label></td>
+					<td><input type="checkbox" name="intrest" id="hhh" value="다이어트" onclick="check();"/>
+					<label for="hhh">다이어트</label></td></lable>
+				 </tr>
+				 <tr>
+					<td><input type="checkbox" name="intrest" id="iii" value="쇼핑" onclick="check();"/>
+					<label for="iii">쇼핑</label></td>
+					<td><input type="checkbox" name="intrest" id="jjj" value="공부" onclick="check();"/>
+					<label for="jjj">공부</label></td></lable>
+				 </tr>
+			     </table>
+		     </form>
+		</div>
+		<div class="lobby container" id="startbutton">
+			<button id="btnRequestRandomChat" class="btn" onclick="oparcity()">채팅입장</button>
+		</div>
+        
+        
+        </div> <!-- container div 끝 -->
+        
+		<div class="wait container" id="wait">
+			<div><p id="waitp">상대방을 기다리는 중</p><div class="loading-container">
+			<div class="loading" ></div></div></div>
+			<button id="btnCancelRequest" class="btn" onclick="return2()">취소</button>
+        </div>
+
+
+<!-- chat.html 시작 -->          
+         
+	<div id="ch-container" class="chat container" style = "display : none;">
+
+		<div id="ch-header">
+			<p>두 사람의 공통관심사는 <span id="int1"></span>입니다. </p>
+		<div id="outdiv"><button type="button" formaction="" id="outbutton" onclick = "window.location.href = 'index.html'">나가기</button></div>
+		</div>  <!-- ch-header div -->
+
+	    <div id="ch-main" style = "overflow : auto">
+			<ul class="chatResult" id = "cell"></ul>
+	    </div>
+
+		<div id="footer">
+			<div id="ft-header">
+				<p id="ftheaderp" style="margin:0px;">메세지 : ex)안녕하세요. 오늘 날씨 좋죠?</p>
+			</div>
+            
+			<div id = "controls">
+			  <textarea id="inputMessage" class="input-medium search-query"></textarea>
+			  <div id="imotidiv"><img src = "emoji.jpg" id="trigger"/></div>
+			  <div id="sendbutton">
+              <button type="submit" id="btnChat" class="btn">전송</button>
+              </div><!-- sendbutton div -->
+		    </div><!-- controls div -->
+		</div> <!-- footer div -->
+	</div> <!-- ch-container div -->
+
+</body>
+</html>
