@@ -1,0 +1,235 @@
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+/* Smartphones (portrait and landscape) */
+    @media only screen and (min-device-width : 320px){
+
+		#ch-container{
+			width:100%;
+			height:100%;
+			margin:0px auto;
+		}
+		#outdiv{
+			width:10%;
+			height:100%;
+			float:left;
+		}
+		#outbutton{
+			float:right;
+			padding:3px;
+			border:1px solid #FFD732;/*테두리정의*/
+			/*border:1px dashed #ff008;/*테두리점선*/
+			background-Color:#FFB900;/*백그라운드정의*/
+			font:12px 굴림;/*폰트정의*/
+			font-weight:bold;/*폰트굵기*/
+			color:white;/*폰트색깔*/
+			width:100%;
+			height:100%;
+		}
+		#outbutton:hover{
+			background-color:white;
+			color:#FFB900;
+		}
+		#ch-header{
+			width:320px;
+			height:50px;
+			line-height:25px;
+			margin:0px auto;
+			background-color:#ccFF99;
+			text-align:center;
+		}
+		#ch-header p{
+			font-size:11px;
+			width:90%;
+			float:left;
+		}
+		p #int1,#int2,#int3{
+			font-size:14px;
+		}
+		#ch-main{
+			width:320px;
+			height:340px;
+			margin:0px auto;
+			background-color:#FFFFcc;
+		}
+		#footer{
+			width:320px;
+			height:78px;
+			/*background-color:lime;*/
+			margin:0px auto;
+		}
+		#ft-header{
+			width:320px;
+			height:15px;
+			line-height:15px;
+		}
+		*{
+			padding:0;
+			margin:0;
+			-webkit-box-sizing:border-box;
+			-moz-box-sizing:border-box;
+			box-sizing:border-box;
+		}
+		body{
+			font-family:'JejuGothic',sans-serif;
+		}
+		ul{
+			list-style-type:none;
+			padding:15px;
+			background:#FFFF99;
+			color:#000;
+		}
+		#controls{
+			height:63px;
+			border-top:2px #D2691E solid;
+			display:block;
+			width:100%
+		}
+		#controls #inputMessage{
+			width:82%;
+			height:100%;
+			font-size:15px;
+			float:left;
+			}
+		#imotidiv{
+			width:8%;
+			height:100%;
+			display:inline-block;
+			border:1px solid grey;
+			background-color:white;
+		}
+		#trigger{
+			width:100%;
+			height:100%;
+			padding:10px 1px;
+		}
+		#sendbutton{
+			width:10%;
+			height:100%;
+			float:right;
+		}
+		#controls #btnChat{
+			width:100%;
+			height:100%;
+			font-size:15px;
+		}
+		#ftheaderp{
+			font-size:12px;
+			background-color:#FFC19E;}
+		}
+
+	/*min-device-width:320px끝*/
+
+
+	/* Desktops and laptops */
+    @media only screen and (min-width : 1014px) {
+
+		#outbutton{
+			float:right;
+			padding:7px;
+			border:1px solid #FFD732;/*테두리정의*/
+			/*border:1px dashed #ff008;/*테두리점선*/
+			background-Color:#FFB900;/*백그라운드정의*/
+			font:12px 굴림;/*폰트정의*/
+			font-weight:bold;/*폰트굵기*/
+			color:white;/*폰트색깔*/
+			width:100%;
+			height:100%;
+		}
+		#outbutton:hover{
+			background-color:white;
+			color:#FFB900;
+		}
+		#outdiv{
+			width:10%;
+			height:100%;
+			float:left;
+		}
+		#ch-header{
+			width:940px;
+			height:30px;
+			line-height:30px;
+			margin:0px auto;
+			background-color:#ccFF99;
+			text-align:center;
+		}
+		#ch-headerp{
+			font-size:15px;
+			float:left;
+		}
+		p #int1,#int2,#int3{
+			font-size:20px;
+		}
+		#ch-main{
+			width:940px;
+			height:700px;
+			margin:0px auto;
+			background-color:#FFFFcc;
+		}
+		#footer{
+			width:940px;
+			height:100px;
+			/*background-color:lime;*/
+			margin:0px auto;
+		}
+		#ft-header{
+			width:940px;
+			height:30px;
+			line-height:30px;
+		}
+		*{
+			padding:0;margin:0;
+			-webkit-box-sizing:border-box;
+			-moz-box-sizing:border-box;
+			box-sizing:border-box;
+		}
+		body{
+			height:100%;
+			/*margin-top:3%;*/
+			font-family:'JejuGothic',sans-serif;
+		}
+		ul{
+			list-style-type:none;
+			padding:20px;
+			background:#FFFF99;
+			color:#000;
+		}
+		#controls{
+			height:70px;
+			border-top:2px #D2691E solid;
+			display:block;
+			width:100%
+		}
+		#controls #inputMessage{
+			width:82%;
+			height:100%;
+			padding:20px;
+			font-size:18px;
+			float:left;
+		}
+		#imotidiv{
+			width:8%;
+			height:100%;
+			display:inline-block;
+			border:1px solid grey;
+		}
+		#trigger{
+			width:100%;
+			height:100%;
+			padding:12px;
+		}
+		#sendbutton{
+			width:10%;
+			height:100%;
+			float:right;
+			border:1px solid grey;
+		}
+		#controls #btnChat{
+			width:100%;
+			height:100%;
+			padding:10px;
+			font-size:20px;
+		}
+		#ftheaderp{
+			font-size:15px;
+			background-color:#FFC19E;
+		}
