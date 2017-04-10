@@ -1,4 +1,7 @@
-# Nodejs_RandomChat_Project 2016/January
+# Nodejs_RandomChat_Project
+
+
+2016 / January / special lecture project
 
 
 Random chat by multi category
